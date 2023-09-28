@@ -13,9 +13,10 @@ const newAgeInput = document.querySelector('#age')
 const newLikesText = document.querySelector('textarea')
 const charContainer = document.querySelector('section')
 
+const baseURL = `http://localhost:4000`
 // const baseURL = 
 getAllBtn.addEventListener(`click`, () => {
-  axios.get(`http://localhost:4000/characters`)
+  axios.get(`${baseURL}/characters`)
   .then ((response) =>{
     clearCharacters()
     for (let i = 0; i < response.data.length; i++) {
@@ -25,6 +26,31 @@ getAllBtn.addEventListener(`click`, () => {
   .catch(() => {
 
   })
+})
+
+ageForm.addEventListener(`submit`, (event) => {
+  event.preventDefault()
+
+  let age = ageInput.value 
+
+  axios.get(`${baseURL}/character?age=${age}`)
+
+  .then((response) => {
+    clearCharacters()
+    for (let i = 0; i < response.data.length; i++) {
+      createCharacterCard(response.data[i])
+    }
+  })
+  .catch((error) => {
+
+  })
+})
+
+createForm.addEventListener(`submit`, (event) =>{
+  event.preventDefault()
+
+  
+  
 })
 function createCharacterCard(char) {
   let charCard = document.createElement('div')
